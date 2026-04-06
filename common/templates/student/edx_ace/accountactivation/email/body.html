@@ -10,7 +10,7 @@
         <td>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                    {% blocktrans %}This is a routed Account Activation email for {{ routed_user }} ({{ routed_user_email }}): {{ routed_profile_name }}{% endblocktrans %}
+                    {% blocktrans %}Este es un correo electrónico de activación de cuenta {{ routed_user }} ({{ routed_user_email }}): {{ routed_profile_name }}{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
@@ -20,17 +20,17 @@
     <tr>
         <td>
             <h1>
-                {% trans "Account activation" as header_msg %}{{ header_msg | force_escape }}
+                {% trans "Activación de cuenta" as header_msg %}{{ header_msg | force_escape }}
             </h1>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                    {% blocktrans %}You're almost there! Use the link below to activate your account to access engaging, high-quality {{ platform_name }} courses. Note that you will not be able to log back into your account until you have activated it.{% endblocktrans %}
+                    {% blocktrans %}¡Ya casi! Utiliza el enlace a continuación para activar tu cuenta y acceder a cursos de Cursos @prende.mx atractivos y de alta calidad. Ten en cuenta que no podrás volver a iniciar sesión en tu cuenta hasta que la hayas activado. {% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
 
             {% filter force_escape %}
-                {% blocktrans asvar course_cta_text %}Activate your account{% endblocktrans %}
+                {% blocktrans asvar course_cta_text %}Activa tu cuenta{% endblocktrans %}
             {% endfilter %}
             {% include "ace_common/edx_ace/common/return_to_course_cta.html" with course_cta_text=course_cta_text course_cta_url=confirm_activation_link %}
         </td>
@@ -39,7 +39,7 @@
         <td>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                    {% blocktrans %}Enjoy learning with {{ platform_name }}.{% endblocktrans %}
+                    {% blocktrans %}Disfruta aprendiendo con Cursos @prende.mx.{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
@@ -48,7 +48,7 @@
         <td>
             <p style="color: rgba(0,0,0,.75);">
                 {% blocktrans trimmed asvar assist_msg %}
-                If you need help, please use our web form at {start_anchor_web}{{ support_url }}{end_anchor} or email {start_anchor_email}{{ support_email }}{end_anchor}.
+                    Si necesitas ayuda, utiliza nuestro formulario web en o envía un correo electrónico a cursos@aprende.gob.mx.
                 {% endblocktrans %}
                 {% interpolate_html assist_msg start_anchor_web='<a href="'|add:support_url|add:'">'|safe start_anchor_email='<a href="mailto:'|add:support_email|add:'">'|safe end_anchor='</a>'|safe %}
                 <br />
@@ -61,11 +61,26 @@
         <td>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                    {% blocktrans %}This email message was automatically sent by {{ lms_url }} because someone attempted to create an account on {{ platform_name }} using this email address.{% endblocktrans %}
+                    {% blocktrans %}
+                    Este mensaje de correo electrónico fue enviado automáticamente por https://mexicox.gob.mx porque alguien intentó crear una cuenta en MéxicoX usando esta dirección de correo electrónico.
+
+                    {% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
         </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="">
+                © 2025 MexicoX, Todos los derechos reservados.
+
+            </p>
+            <p>
+                MexicoX - https://mexicox.gob.mx
+            </p>
+        </td>
+
     </tr>
 </table>
 {% endblock %}

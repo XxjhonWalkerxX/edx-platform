@@ -603,6 +603,7 @@ such that the value can be defined later than this assignment (file load order).
         function batchEnrollment($container) {
             var batchEnroll = this;
             this.$container = $container;
+            this.$clear_error= false;
             this.$identifier_input = this.$container.find("textarea[name='student-ids']");
             this.$enrollment_button = this.$container.find('.enrollment-button');
             this.$reason_field = this.$container.find("textarea[name='reason-field']");
@@ -619,25 +620,38 @@ such that the value can be defined later than this assignment (file load order).
                 }
 
                 emailStudents = batchEnroll.$checkbox_emailstudents.is(':checked');
+              var contenido =batchEnroll.$identifier_input.val().replace(/(?:\r\n|\r|\n)/g,",");
+              var listado = contenido.split(",");
+              console.log(batchEnroll.$identifier_input.val())
+              console.log(contenido)
+              this.$clear_error = false;
+              var response = null;
+              var sublistado = "";
+              for(var i=0,t=listado.length;i<t;i+=80){
+                sublistado= listado.slice(i, i+80).join(",");
                 sendData = {
                     action: $(event.target).data('action'),
-                    identifiers: batchEnroll.$identifier_input.val(),
+                    identifiers: sublistado,
                     auto_enroll: batchEnroll.$checkbox_autoenroll.is(':checked'),
                     email_students: emailStudents,
                     reason: batchEnroll.$reason_field.val()
                 };
-                return $.ajax({
-                    dataType: 'json',
-                    type: 'POST',
-                    url: $(event.target).data('endpoint'),
-                    data: sendData,
-                    success: function(data) {
-                        return batchEnroll.display_response(data);
-                    },
-                    error: statusAjaxError(function() {
-                        return batchEnroll.fail_with_error(gettext('Error enrolling/unenrolling users.'));
-                    })
-                });
+                response =   $.ajax({
+                        dataType: 'json',
+                        type: 'POST',
+                        url: $(event.target).data('endpoint'),
+                        data: sendData,
+                        async: false,
+                        success: function(data) {
+                            return batchEnroll.display_response(data);
+                        },
+                        error: statusAjaxError(function() {
+                            return batchEnroll.fail_with_error(gettext('Error enrolling/unenrolling users.'));
+                        })
+                    });
+              }
+              this.$clear_error = true;
+              return response
             });
         }
 
@@ -660,9 +674,12 @@ such that the value can be defined later than this assignment (file load order).
                 invalidIdentifier, notenrolled, notunenrolled, renderList, sr, studentResults,
                 i, j, len, len1, ref, renderIdsLists,
                 displayResponse = this;
-            this.clear_input();
-            this.$task_response.empty();
-            this.$request_response_error.empty();
+            if(this.$clear_error){
+              this.clear_input();
+              this.$task_response.empty();
+              this.$request_response_error.empty();
+            }
+
             invalidIdentifier = [];
             errors = [];
             enrolled = [];

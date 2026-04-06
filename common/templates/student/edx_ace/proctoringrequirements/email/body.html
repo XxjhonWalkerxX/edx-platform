@@ -27,7 +27,7 @@
                 {% autoescape off %}
                 {# xss-lint: disable=django-blocktrans-missing-escape-filter #}
                 {% blocktrans %}
-                    You are enrolled in {{ course_name }} at {{ platform_name }}. This course contains proctored exams.
+                Estás inscrito en {{ course_name }} en {{ platform_name }}. Este curso contiene exámenes supervisados.
                 {% endblocktrans %}
                 {% endautoescape %}
             </p>
@@ -36,7 +36,7 @@
                 {% autoescape off %}
                 {# xss-lint: disable=django-blocktrans-missing-escape-filter #}
                 {% blocktrans %}
-                    Proctored exams are timed exams that you take while proctoring software monitors your computer's desktop, webcam video, and audio. Your course uses {{ proctoring_provider }} software for proctoring.
+                Los exámenes supervisados ​​son exámenes cronometrados que se realizan mientras el software de supervisión monitorea el escritorio de la computadora, el video de la cámara web y el audio. El curso utiliza el software de supervisión {{ proctoring_provider }}.
                 {% endblocktrans %}
                 {% endautoescape %}
             </p>
@@ -44,20 +44,20 @@
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
                 {% blocktrans %}
-                    Carefully review the system requirements as well as the steps to take a proctored exam in order to ensure that you are prepared.
+                Revise cuidadosamente los requisitos del sistema, así como los pasos para realizar un examen supervisado para asegurarse de estar preparado.
                 {% endblocktrans %}
                 {% endfilter %}
             </p>
 
             {% filter force_escape %}
             {% blocktrans asvar course_cta_text %}
-                Proctoring Instructions and Requirements
+                Instrucciones y requisitos de supervisión
             {% endblocktrans %}
             {% endfilter %}
             {% include "ace_common/edx_ace/common/return_to_course_cta.html" with course_cta_text=course_cta_text course_cta_url=proctoring_requirements_url %}
 
             <p>
-                {% trans "Thank you," as tmsg %}{{ tmsg | force_escape }}
+                {% trans "Gracias," as tmsg %}{{ tmsg | force_escape }}
                 <br />
                 {% filter force_escape %}
                 {% blocktrans %}The {{ platform_name }} Team {% endblocktrans %}

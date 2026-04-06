@@ -11,27 +11,27 @@
             </h1>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}You're receiving this e-mail because you requested to create a password for your user account at {{ platform_name }}.{% endblocktrans %}
+                {% blocktrans %}Estás recibiendo este correo electrónico porque solicitaste crear una contraseña para tu cuenta de usuario en {{ platform_name }}.{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
 
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}We've restored access to your {{ platform_name }} account using the recovery email you provided at registration.{% endblocktrans %}
+                {% blocktrans %}Hemos restaurado el acceso a su {{ platform_name }} cuenta utilizando el correo electrónico de recuperación que proporcionó al registrarse.{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
 
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}Once you've created a password [below], you will be able to log in to {{ platform_name }} with this email ({{ email }}) and your new password.{% endblocktrans %}
+                {% blocktrans %}Una vez que haya creado una contraseña [abajo], podrá iniciar sesión en {{ platform_name }} con este correo electrónico ({{ email }}) y tu nueva contraseña.{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
 
             <p style="color: rgba(0,0,0,.75);">
-                {% trans "If you didn't request this change, you can disregard this email - we have not yet reset your password." as tmsg %}{{ tmsg | force_escape }}
+                {% trans "Si no solicitó este cambio, puede ignorar este correo electrónico: aún no hemos restablecido su contraseña." as tmsg %}{{ tmsg | force_escape }}
                 <br />
             </p>
 
@@ -43,3 +43,4 @@
     </tr>
 </table>
 {% endblock %}
+

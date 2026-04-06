@@ -1,1 +1,1 @@
-{{ platform_name }}
+MéxicoX

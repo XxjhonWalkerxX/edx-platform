@@ -16,16 +16,17 @@
             </p>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}This is to confirm that you have successfully changed your password associated with {{ platform_name }} account. Please sign-in to your account.{% endblocktrans %}
+                {% blocktrans %}Esto es para confirmar que ha cambiado exitosamente su contraseña asociada con {{ platform_name }} cuenta. Inicie sesión en su cuenta.{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
 
                 {% filter force_escape %}
-                {% blocktrans asvar course_cta_text %}Sign in{% endblocktrans %}
+                {% blocktrans asvar course_cta_text %}Iniciar sesión{% endblocktrans %}
                 {% endfilter %}
                 {% include "ace_common/edx_ace/common/return_to_course_cta.html" with course_cta_text=course_cta_text course_cta_url=login_link %}
         </td>
     </tr>
 </table>
 {% endblock %}
+

@@ -308,6 +308,30 @@ def _update_social_context(request, context, course, user_certificate, platform_
             course, user_certificate.mode, smart_str(share_url), certificate=user_certificate
         )
 
+def _update_context_with_user_score(context, user, user_certificate):
+    
+    if context.get('fullTheme', False):
+            context['fullTheme'] = False
+    else:
+            context['fullTheme'] = True
+    
+    try:
+
+        if context.get('displayScore', False):  # Verifica si displayScore existe en el contexto
+            context['score_available'] = False  # Inicializa en False
+            from lms.djangoapps.grades.api import CourseGradeFactory
+            for user, course_grade, exc in CourseGradeFactory().iter(
+                    [user], course_key=user_certificate.course_id):
+                if course_grade and course_grade.percent is not None:
+                    context['course_grade'] = "{:.0f}".format(course_grade.percent * 100)
+                    context['score_available'] = True  # Solo si se obtiene una calificación válida
+                else:
+                    context['course_grade'] = "N/A"  # Evita errores en la plantilla
+    except Exception as e:
+        context['score_available'] = False
+        context['course_grade'] = "N/A"  # Asegura que siempre haya un valor
+
+
 
 def _update_context_with_user_info(context, user, user_certificate):
     """
@@ -417,6 +441,8 @@ def _update_organization_context(context, course):
         course_org_display = course_org_display or organization.get('short_name')
         organization_logo = organization.get('logo', None)
     partner_short_name = course_org_display or course.org
+    partner_desc_name = organization.get('description', partner_short_name)
+    context['accomplishment_copy_course_org_2'] = partner_desc_name
 
     context['organization_long_name'] = partner_long_name
     context['organization_short_name'] = partner_short_name
@@ -587,6 +613,10 @@ def render_html_view(request, course_id, certificate=None):  # pylint: disable=t
 
         # Append/Override the existing view context values with any course-specific static values from Advanced Settings
         context.update(course.cert_html_view_overrides)
+        # Cambia a False si no deseas mostrar la calificación
+        ##FIX TO CALIFICATION
+        _update_context_with_user_score(context, user, user_certificate)
+
 
         # Track certificate view events
         _track_certificate_events(request, course, user, user_certificate)
