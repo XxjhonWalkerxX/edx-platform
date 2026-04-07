@@ -13,7 +13,7 @@
             </h1>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}This is to confirm that you changed the e-mail associated with {{ platform_name }} from {{ old_email }} to {{ new_email }}. If you did not make this request, please contact us immediately. Contact information is listed at:{% endblocktrans %}
+                {% blocktrans %}Esto es para confirmar que usted cambió el correo electrónico asociado con {{ platform_name }} de {{ old_email }} a {{ new_email }}. Si no ha realizado esta solicitud, póngase en contacto con nosotros de inmediato. La información de contacto se encuentra en:{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
@@ -22,7 +22,7 @@
 
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}We keep a log of old e-mails, so if this request was unintentional, we can investigate.{% endblocktrans %}
+                {% blocktrans %}Mantenemos un registro de correos electrónicos antiguos, por lo que si esta solicitud fue involuntaria, podemos investigar.{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
@@ -31,3 +31,4 @@
     </tr>
 </table>
 {% endblock %}
+

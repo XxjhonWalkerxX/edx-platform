@@ -11,19 +11,19 @@
             </h1>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}We received a request to change the e-mail associated with your {{ platform_name }} account from {{ old_email }} to {{ new_email }}. If this is correct, please confirm your new e-mail address by visiting:{% endblocktrans %}
+                {% blocktrans %}Recibimos una solicitud para cambiar el correo electrónico asociado a su {{ platform_name }} cuenta de {{ old_email }} a {{ new_email }}. Si esto es correcto, confirme su nueva dirección de correo electrónico visitando:{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
 
             {% filter force_escape %}
-                {% blocktrans asvar course_cta_text %}Confirm Email Change{% endblocktrans %}
+                {% blocktrans asvar course_cta_text %}Confirmar cambio de correo electrónico{% endblocktrans %}
             {% endfilter %}
             {% include "ace_common/edx_ace/common/return_to_course_cta.html" with course_cta_text=course_cta_text course_cta_url=confirm_link %}
 
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}If you didn't request this, you don't need to do anything; you won't receive any more email from us. Please do not reply to this e-mail; if you require assistance, check the help section of the {{ platform_name }} web site.{% endblocktrans %}
+                {% blocktrans %}Si no lo ha solicitado, no necesita hacer nada; no recibirá más correos electrónicos nuestros. No responda a este correo electrónico; si necesita ayuda, consulte la sección de ayuda de la página. {{ platform_name }} sitio web.{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>

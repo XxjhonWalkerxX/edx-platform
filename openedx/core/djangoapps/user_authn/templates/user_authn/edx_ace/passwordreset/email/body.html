@@ -11,7 +11,7 @@
             </h1>
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
-                {% blocktrans %}You're receiving this e-mail because you requested a password reset for your user account at {{ platform_name }}.{% endblocktrans %}
+                {% blocktrans %}Estás recibiendo este correo electrónico porque solicitaste un restablecimiento de contraseña para tu cuenta de usuario en {{ platform_name }}.{% endblocktrans %}
                 {% endfilter %}
                 <br />
             </p>
@@ -19,18 +19,18 @@
             {% if failed %}
                 <p style="color: rgba(0,0,0,.75);">
                     {% filter force_escape %}
-                    {% blocktrans %}However, there is currently no user account associated with your email address: {{ email_address }}.{% endblocktrans %}
+                    {% blocktrans %}Sin embargo, actualmente no hay ninguna cuenta de usuario asociada a su dirección de correo electrónico: {{ email_address }}.{% endblocktrans %}
                     {% endfilter %}
                     <br />
                 </p>
 
                 <p style="color: rgba(0,0,0,.75);">
-                    {% trans "If you did not request this change, you can ignore this email." as tmsg %}{{ tmsg | force_escape }}
+                    {% trans "Si no solicitó este cambio, puede ignorar este correo electrónico." as tmsg %}{{ tmsg | force_escape }}
                     <br />
                 </p>
             {% else %}
                 <p style="color: rgba(0,0,0,.75);">
-                    {% trans "If you didn't request this change, you can disregard this email - we have not yet reset your password." as tmsg %}{{ tmsg | force_escape }}
+                    {% trans "Si no solicitó este cambio, puede ignorar este correo electrónico: aún no hemos restablecido su contraseña." as tmsg %}{{ tmsg | force_escape }}
                     <br />
                 </p>
                 {# xss-lint: disable=django-trans-missing-escape #}
@@ -43,3 +43,4 @@
     </tr>
 </table>
 {% endblock %}
+
