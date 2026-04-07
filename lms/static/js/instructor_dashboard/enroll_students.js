@@ -183,12 +183,13 @@
   // Exponer la función globalmente para uso manual: window.openEnrollStudents()
   window.openEnrollStudents = openEnrollStudents;
 
-  // Auto-enlace opcional: si existe un botón con id "launch-enroll-students"
-  // o cualquier elemento con el atributo data-launch-enroll, se enlaza.
-  const autoBtn = document.getElementById('launch-enroll-students')|| document.querySelector('[data-launch-enroll]');
-  if (autoBtn) {
-    autoBtn.addEventListener('click', openEnrollStudents);
-  }
+  // Auto-enlace: esperar a que el DOM esté listo antes de buscar el botón.
+  document.addEventListener('DOMContentLoaded', function () {
+    const autoBtn = document.getElementById('launch-enroll-students') || document.querySelector('[data-launch-enroll]');
+    if (autoBtn) {
+      autoBtn.addEventListener('click', openEnrollStudents);
+    }
+  });
 
 })();
 
