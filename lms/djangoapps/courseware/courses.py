@@ -53,6 +53,7 @@ from lms.djangoapps.courseware.exceptions import CourseAccessRedirect, CourseRun
 from lms.djangoapps.courseware.masquerade import check_content_start_date_for_masquerade_user
 from lms.djangoapps.courseware.model_data import FieldDataCache
 from lms.djangoapps.courseware.block_render import get_block
+from lms.djangoapps.courseware.utils import is_empty_html
 from lms.djangoapps.grades.api import CourseGradeFactory
 from lms.djangoapps.survey.utils import SurveyRequiredAccessError, check_survey_required_and_unanswered
 from openedx.core.djangoapps.content.block_structure.api import get_block_structure_manager
@@ -418,7 +419,10 @@ def get_course_about_section(request, course, section_key):
 
             if about_block is not None:
                 try:
-                    html = about_block.render(STUDENT_VIEW).content
+                    # Only render XBlock if content exists to avoid generating empty wrapper divs
+                    content = about_block.data
+                    if not is_empty_html(content):
+                        html = about_block.render(STUDENT_VIEW).content
                 except Exception:  # pylint: disable=broad-except
                     html = render_to_string('courseware/error-message.html', None)
                     log.exception(
@@ -811,7 +815,9 @@ def get_assignments_grades(user, course_id, cache_timeout):
         course_id (CourseLocator): The course key.
         cache_timeout (int): Cache timeout in seconds
     Returns:
-        list (ReadSubsectionGrade, ZeroSubsectionGrade): The list with assignments grades.
+        tuple:
+            - list[Union[ReadSubsectionGrade, ZeroSubsectionGrade]]: List of subsection grades.
+            - list[dict]: List of dictionaries with section-level grade breakdown and assignment info.
     """
     is_staff = bool(has_access(user, 'staff', course_id))
 
@@ -842,7 +848,7 @@ def get_assignments_grades(user, course_id, cache_timeout):
         log.warning(f'Could not get grades for the course: {course_id}, error: {err}')
         return []
 
-    return subsection_grades
+    return subsection_grades, course_grade.grader_result()['section_breakdown']
 
 
 def get_first_component_of_block(block_key, block_data):
@@ -947,7 +953,7 @@ def sort_by_announcement(courses):
     # Sort courses by how far are they from they start day
     def _key(course):
         return course.sorting_score
-    courses = sorted(courses, key=_key, reverse=True)
+    courses = sorted(courses, key=_key)
 
     return courses
 
@@ -959,7 +965,7 @@ def sort_by_start_date(courses):
     courses = sorted(
         courses,
         key=lambda course: (course.has_ended(), course.start is None, course.start),
-        reverse=True
+        reverse=False
     )
 
     return courses
