@@ -235,11 +235,19 @@ def _use_new_financial_assistance_flow(course_id):
 def is_empty_html(html_content):
     """
     Check if HTML content is effectively empty.
+
+    Content is considered non-empty if it has visible text OR contains any
+    embedded media element (e.g. a course intro video iframe), since those
+    carry no text but are meaningful content.
     """
     if not html_content:
         return True
 
     soup = BeautifulSoup(html_content, 'html.parser')
     text = soup.get_text(strip=True)
+    if text:
+        return False
 
-    return not text
+    # Media/embedded elements have no text but are meaningful content.
+    media_tags = ('iframe', 'video', 'audio', 'img', 'embed', 'object', 'source')
+    return soup.find(media_tags) is None
